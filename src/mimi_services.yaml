@@ -1,0 +1,3 @@
+services:
+  Mimi\ConsoleCommands\ListConsoleCommandsCommand:
+

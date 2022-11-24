@@ -1,0 +1,25 @@
+{
+    "name": "alberthorta/mimi",
+    "description": "Mimimal PHP Framework",
+    "type": "library",
+    "license": "GPL-3.0-or-later",
+    "authors": [
+        {
+            "name": "Albert Horta Llobet",
+            "email": "albert@horta.name",
+            "role": "Developer"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "php": ">=7.1.0",
+        "ext-yaml": "*",
+        "vlucas/phpdotenv": "^5.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Mimi\\": "src/"
+        }
+    },
+    "bin": ["bin/mimi"]
+}

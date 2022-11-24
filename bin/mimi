@@ -1,0 +1,38 @@
+#!/usr/bin/env php
+<?php declare(strict_types=1);
+
+define('MIMI_BIN_PATH',     __FILE__);
+
+if (is_file($autoload = getcwd() . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php')) {
+    require $autoload;
+}
+
+use Mimi\ConsoleCommands\Output\ConsoleCommandOutput;
+use Mimi\Mimi;
+use Mimi\Services\ServiceContainer;
+
+set_time_limit(0);
+
+Mimi::initialize();
+
+$output = new ConsoleCommandOutput();
+
+$currentCommand = "";
+if(count($argv)>1) {
+    $currentCommand = $argv[1];
+}
+
+foreach(ServiceContainer::get()->getConsoleServices() as $consoleCommand) {
+    if(
+        $consoleCommand->getCommandName() === $currentCommand ||
+        in_array($currentCommand, $consoleCommand->getCommandAliases(), true)
+    ) {
+        die($consoleCommand->getInstance(ServiceContainer::get())->run($output));
+    }
+}
+
+$output->write(ConsoleCommandOutput::LIGHT_RED);
+$output->writeln('No command found (' . $currentCommand . ')');
+$output->write(ConsoleCommandOutput::DEF);
+
+die(-1);
